@@ -13,36 +13,38 @@ import javax.swing.JTextField;
 import ui.LaunchWindow;
 import static ui.UIConstants.*;
 
-public class Fcfs extends JPanel{
+public class Rr extends JPanel{
     
-    private final JLabel inputLabel = new JLabel("FCFS - Input");
+    private final JLabel inputLabel = new JLabel("RR - Input");
     private final JLabel algorithmLabel = new JLabel(LABEL_ALGORITHM);
     private final JComboBox algorithmChoicesBox = new JComboBox(ALGORITHM_CHOICES);
     private final JLabel arrivalTimeLabel = new JLabel(LABEL_ARRIVAL);
     private final JTextField arrivalTimeField = new JTextField();
     private final JLabel burstTimeLabel = new JLabel(LABEL_BURST);
     private final JTextField burstTimeField = new JTextField();
-    private final JButton solve = new JButton("Solve");
+    private final JLabel timeQuantumLabel = new JLabel(LABEL_QUANTUM);
+    private final JTextField timeQuantumField = new JTextField();
+        private final JButton solve = new JButton("Solve");
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
     private final GridBagConstraints gbc = new GridBagConstraints();
     
-    public Fcfs(LaunchWindow launchWindow){
-        algorithmChoicesBox.setSelectedIndex(0);
+    public Rr(LaunchWindow launchWindow){
+        algorithmChoicesBox.setSelectedIndex(2);
         setLayout(gridBagLayout);
         setPreferredSize(PANEL_SIZE);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // INPUT
-        gbc.insets = new Insets(-150, 140, 0, 0);
+        gbc.insets = new Insets(-150, 140, -50, 0);
         gbc.gridx=0; gbc.gridy=0;
         gbc.gridwidth=5;
         gbc.anchor = GridBagConstraints.CENTER;
         inputLabel.setFont(new Font("JetBrains Mono", Font.BOLD, 50));
         add(inputLabel, gbc);
         
-        // ALGO
         gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.gridx=1; gbc.gridy=0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // ALGO
         gbc.gridx=0; gbc.gridy=1;
         add(algorithmLabel, gbc);
         
@@ -69,9 +71,18 @@ public class Fcfs extends JPanel{
         burstTimeField.setMaximumSize(COMPONENT_SIZE);
         add(burstTimeField, gbc);
         
+        // TQ
+        gbc.gridx=0; gbc.gridy=7;
+        add(timeQuantumLabel, gbc);
+        
+        gbc.gridx=1; gbc.gridy=8;
+        timeQuantumField.setPreferredSize(COMPONENT_SIZE);
+        timeQuantumField.setMaximumSize(COMPONENT_SIZE);
+        add(timeQuantumField, gbc);
+        
         // Button
-        gbc.insets = new Insets(50, 0, 0, 0);
-        gbc.gridx=1; gbc.gridy=7;
+        gbc.insets = new Insets(40, 0, 0, 0);
+        gbc.gridx=1; gbc.gridy=9;
         gbc.fill = GridBagConstraints.NONE;
         solve.setPreferredSize(new Dimension(300, 40));
         solve.setMaximumSize(new Dimension(300, 40));
@@ -82,13 +93,12 @@ public class Fcfs extends JPanel{
         });
         
         solve.addActionListener(e->{
-            if(arrivalTimeField.getText().isEmpty()){
-                System.out.println("hello");
-            }
             String numStrAT =  arrivalTimeField.getText().trim();
             String arrATNum[] = numStrAT.split("\\s+");
             String numStrBT =  burstTimeField.getText().trim();
             String arrBTNum[] = numStrBT.split("\\s+");
+            String numStrTQ =  timeQuantumField.getText().trim();
+            int timeQuantum = Integer.parseInt(numStrTQ);
             int arrivalTimeInput[] = new int[arrATNum.length];
             int burstTimeInput[] = new int[arrATNum.length];
             
