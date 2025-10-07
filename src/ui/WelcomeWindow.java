@@ -17,9 +17,9 @@ public class WelcomeWindow extends JPanel{
     private final JLabel title = new JLabel("<html>Scheduling Simulator</html>");
     private final String members[] = {
                                   "Mark Joshua Padilla",
-                                  "Kryzza Dianne Quizon",
+                                  "Kryzza Mae Quizada",
                                   "Miko James Santos",
-                                  "Gerald Sullano"
+                                  "Mark Gerald Sullano"
     };
     JLabel[] membersLabel = new JLabel[members.length];
     

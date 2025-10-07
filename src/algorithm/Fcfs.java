@@ -8,6 +8,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import ui.LaunchWindow;
@@ -25,8 +26,11 @@ public class Fcfs extends JPanel{
     private final JButton solve = new JButton("Solve");
     private final GridBagLayout gridBagLayout = new GridBagLayout();
     private final GridBagConstraints gbc = new GridBagConstraints();
+    private boolean isCorrectInput = false;
+    private final LaunchWindow launchWindow;
     
     public Fcfs(LaunchWindow launchWindow){
+        this.launchWindow = launchWindow;
         algorithmChoicesBox.setSelectedIndex(0);
         setLayout(gridBagLayout);
         setPreferredSize(PANEL_SIZE);
@@ -81,21 +85,37 @@ public class Fcfs extends JPanel{
             launchWindow.showWindow(algorithmChoicesBox.getSelectedIndex());
         });
         
-        solve.addActionListener(e->{
-            if(arrivalTimeField.getText().isEmpty()){
-                System.out.println("hello");
-            }
-            String numStrAT =  arrivalTimeField.getText().trim();
-            String arrATNum[] = numStrAT.split("\\s+");
-            String numStrBT =  burstTimeField.getText().trim();
-            String arrBTNum[] = numStrBT.split("\\s+");
-            int arrivalTimeInput[] = new int[arrATNum.length];
-            int burstTimeInput[] = new int[arrATNum.length];
-            
-            for (int i = 0; i < arrATNum.length; i++) {
-                arrivalTimeInput[i] = Integer.parseInt(arrATNum[i]);
-                burstTimeInput[i] = Integer.parseInt(arrBTNum[i]);
-            }
-        });
+        solve();
+        
+    }
+    
+    public void solve(){
+        System.out.println("hello world");
+        do {            
+            solve.addActionListener(e->{
+                String numStrAT =  arrivalTimeField.getText().trim();
+                String arrATNum[] = numStrAT.split("\\s+");
+                String numStrBT =  burstTimeField.getText().trim();
+                String arrBTNum[] = numStrBT.split("\\s+");
+                int burstTimeInput[] = new int[arrBTNum.length];
+                int arrivalTimeInput[] = new int[arrATNum.length];
+                
+                if(!arrivalTimeField.getText().isEmpty() || arrATNum.length==arrBTNum.length){
+                    for (int i = 0; i < arrATNum.length; i++) {
+                        try {
+                            arrivalTimeInput[i] = Integer.parseInt(arrATNum[i]);
+                            burstTimeInput[i] = Integer.parseInt(arrBTNum[i]);
+                            isCorrectInput = true;
+                            
+                        } catch (NumberFormatException err) {
+                            JOptionPane.showMessageDialog(launchWindow, "Invalid Input"); 
+                            break;
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(launchWindow, "Invalid Input");
+                }
+            }); 
+        } while (isCorrectInput);
     }
 }
